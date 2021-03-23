@@ -1,5 +1,5 @@
 # Slaves-Vk-MiniApp
-
+Program that updates fetters automatically in MiniApp "Рабы": https://vk.cc/c01jmF
 # First Step
 Download repository and install needed version (same as Chrome brawser version) of Chrome WebDriver: https://chromedriver.chromium.org/downloads. 
 Place chromedriver.exe in the root folder.
