@@ -1,74 +1,182 @@
-'''
-Program that updates fetters automatically in MiniApp "Рабы": https://vk.cc/c01jmF
-'''
-
-from selenium import webdriver
-import time
-from selenium.webdriver.support.ui import WebDriverWait
+import requests
+import json
+import schedule
 
 
-#############    All needed settings    #############################
+authorization = 'YOURAUTHORISATION'
+job_name = "🛑 НЕ ВЫКУПАТЬ 🛑"
+min_price = 100
 
 
-login = "PHONEOREMAIL"
-password = "PASSWORD"
+
+def myProfile():
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/start"
+    global authorization
+    payload = {}
+    headers = {
+        'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+        'authorization': authorization,
+        'sec-ch-ua-mobile': '?0'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response.json()
+
+def userProfile(user_id):
+
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/user?id=" + str(user_id)
+
+    global authorization
+    payload = {}
+    headers = {
+        'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+        'authorization': authorization,
+        'sec-ch-ua-mobile': '?0'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response.json()
+
+def topUsers():
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/topUsers"
+
+    global authorization
+    payload = {}
+    headers = {
+        'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+        'authorization': authorization,
+        'sec-ch-ua-mobile': '?0'
+    }
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response.json()
+
+def jobSlave(slave_id):
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/jobSlave"
+
+    global authorization, job_name
+    payload = json.dumps({
+        "slave_id": slave_id,
+        "name": job_name
+    })
+    headers = {
+      'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+      'authorization': authorization,
+      'sec-ch-ua-mobile': '?0',
+      'content-type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    return response.json()
+
+def buyFetter(slave_id):
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/buyFetter"
+
+    global authorization
+    payload = json.dumps({
+        "slave_id": slave_id
+    })
+    headers = {
+      'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+      'authorization': authorization,
+      'sec-ch-ua-mobile': '?0',
+      'content-type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    return response.json()
+
+def buySlave(slave_id):
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/buySlave"
+    global authorization
+    payload = json.dumps({
+      "slave_id": slave_id
+    })
+    headers = {
+      'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+      'authorization': authorization,
+      'sec-ch-ua-mobile': '?0',
+      'content-type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    jobSlave(slave_id)
+    buyFetter(slave_id)
+    return response.json()
+
+def slaveList(user_id):
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/slaveList?id=" + str(user_id)
+
+    global authorization
+    payload = {}
+    headers = {
+        'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+        'authorization': authorization,
+        'sec-ch-ua-mobile': '?0'
+    }
+    response = requests.request("GET", url, headers=headers, data=payload)
+
+    return response.json()['slaves']
 
 
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-driver = webdriver.Chrome(chrome_options=options)
-driver.implicitly_wait(30)
 
-#####################################################################
+def saleSlave(slave_id):
+    url = "https://pixel.w84.vkforms.ru/HappySanta/slaves/1.0.0/saleSlave"
 
-profile = "https://vk.com/app7794757"
-balance_path = '//*[@id="panel_main"]/div/div[3]/div[2]/div/div[1]/div/div[2]'
-slaves_path = 'SlaveMobile__holder'
-buy_okov_path = '//*[@id="panel_user"]/div/div[4]/div/div/button[1]/div/div'
-user_name = '//*[@id="panel_user"]/div/div[3]/div[1]/div[2]'
-exit_button = '//*[@id="panel_user"]/div/div[2]/div/div[1]/div'
+    global authorization
+    payload = json.dumps({
+        "slave_id": slave_id
+    })
+    headers = {
+      'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+      'authorization': authorization,
+      'sec-ch-ua-mobile': '?0',
+      'content-type': 'application/json'
+    }
 
-driver.get(profile)
-driver.find_element_by_xpath('//*[@id="quick_email"]').send_keys(login)
-driver.find_element_by_xpath('//*[@id="quick_pass"]').send_keys(password)
-driver.find_element_by_xpath('//*[@id="quick_login_button"]').click()
-time.sleep(5)
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    return response.json()
+
+def findSlave(slaves):
+    schedule.run_pending()
+    for slave in slaves:
+        #print(str(slave["price"]))
+        if int(slave["profit_per_min"]) * 60 * int(slave["fetter_hour"]) > int(slave["fetter_price"]) and \
+            int(myProfile()["me"]["balance"]) >= int(slave["fetter_price"]) and int(slave["fetter_to"]) == 0 and \
+                int(slave["price"]) >= min_price:
+            print("Buy: " + str(slave['id']))
+            buySlave(slave['id'])
+        if int(slave["slaves_count"]) != 0:
+            findSlave(slave["slaves"])
+
+
+def Profile():
+    print("Profile")
+    # Run away from your master
+    me = myProfile()["me"]
+    if me["fetter_to"] != 0 and me["price"] <= me["balance"]:
+        buySlave(me["id"])
+
+    # Update Fetters and change job name
+    for slave in myProfile()["slaves"]:
+        if slave["job"]["name"] != job_name:
+            jobSlave(slave["id"])
+        if slave["profit_per_min"]*60*slave["fetter_hour"] > slave["fetter_price"]:
+            if myProfile()["me"]["balance"] >= slave["fetter_price"] and slave["fetter_to"] == 0:
+                buyFetter(slave["id"])
+
+schedule.every(1).minutes.do(Profile)
 
 
 while True:
-    driver.get(profile)
-    time.sleep(5)
-    frame = driver.find_element_by_xpath('//*[@id="app_7794757_container"]').find_element_by_tag_name('iframe')
-    driver.switch_to.frame(frame)
-    wait = WebDriverWait(driver, 10)
-    balance = int(str(driver.find_element_by_xpath(balance_path).text).replace(" ",""))
-
-    slaves = driver.find_elements_by_class_name(slaves_path)
-
-    i = 0
-    for i in range(len(slaves)):
-
-        try:
-            slaves[i].find_element_by_class_name('SlaveMobile__chain-holder')
-        except:
-            try:
-                driver.execute_script("arguments[0].scrollIntoView();",
-                                      slaves[i].find_element_by_class_name('SlaveMobile__avatar-holder'))
-            except:
-                pass
-
-            try:
-                slaves[i].click()
-            except:
-                slaves[i].find_element_by_class_name('SlaveMobile__avatar-holder').click()
-            driver.find_element_by_xpath(user_name)
-            buttons = driver.find_element_by_xpath('//*[@id="panel_user"]/div/div[4]/div/div').find_elements_by_tag_name(
-                'button')
-            if len(buttons) == 2:
-                driver.find_element_by_xpath(buy_okov_path).click()
-                print("buy")
-
-            break
-
-    time.sleep(300)
-
+    tops = list(topUsers()['list'])
+    tops.reverse()
+    for top in tops:
+        print(top)
+        findSlave(slaveList(int(top['id'])))
