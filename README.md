@@ -1,4 +1,4 @@
-# Slaves-Vk-MiniApp
+# Slaves Vk MiniApp Bot
 Program that updates fetters automatically in MiniApp "Рабы": https://vk.cc/c01jmF
 # First Step
 Download repository. 
