@@ -1,5 +1,10 @@
 # Slaves Vk MiniApp Bot | Бот для игры "Рабы"
 Program that updates fetters automatically in MiniApp "Рабы": https://vk.cc/c01jmF
+
+# Features:
+    ● Updates fetters only on profitable slaves
+    ● Removes your fetter if your are free
+    ● Buys new profitable slaves
 # First Step
 Download repository. 
 # Second Step
