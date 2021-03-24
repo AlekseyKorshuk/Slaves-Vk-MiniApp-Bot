@@ -12,7 +12,7 @@ Download repository.
 
 ![image](https://user-images.githubusercontent.com/48794610/112285891-d669a780-8c9b-11eb-93eb-353536a340cc.png)
 # Second Step
-Get your authorization: open game in browser, press Ctrl+Shift+I, go to Network tab, reload game, find start, do to Headers -> Request Headers, copy authorization.
+Get your authorization: open game in browser, press Ctrl+Shift+I, go to Network tab, reload game, find start, go to Headers -> Request Headers, copy authorization.
 It should be looks like this: 
 ```
 Bearer vk_access_token_settings=friends,status&vk_app_id=111111111&vk_are_notifications_enabled=1&vk_is_app_user=1&vk_is_favorite=0&vk_language=ru&vk_platform=desktop_web&vk_ref=other&vk_ts=111111111&vk_user_id=11111111111&sign=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
