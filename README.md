@@ -1,9 +1,8 @@
-# Slaves Vk MiniApp Bot
+# Slaves Vk MiniApp Bot | Бот для игры "Рабы"
 Program that updates fetters automatically in MiniApp "Рабы": https://vk.cc/c01jmF
 # First Step
 Download repository. 
 # Second Step
 Get your authorization.
-Open main.py and put in the right variable.
 # Last Step
-You are done! Just run main.py. Success in collecting slaves!
+You are done! Run bot.exe and follow all instructions. Success in collecting slaves!
