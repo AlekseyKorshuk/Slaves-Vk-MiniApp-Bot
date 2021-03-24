@@ -6,7 +6,9 @@ Program that updates fetters automatically in MiniApp "Рабы": https://vk.cc/
     ● Removes your fetter if your are free
     ● Buys new profitable slaves
 # First Step
-Download repository. 
+Download repository.
+![image](https://user-images.githubusercontent.com/48794610/112285867-cfdb3000-8c9b-11eb-9cb7-c4cecb6e9a21.png)
+![image](https://user-images.githubusercontent.com/48794610/112285891-d669a780-8c9b-11eb-93eb-353536a340cc.png)
 # Second Step
 Get your authorization: open game in browser, press Ctrl+Shift+I, go to Network tab, reload game, find start, do to Headers -> Request Headers, copy authorization.
 It should be looks like this: 
