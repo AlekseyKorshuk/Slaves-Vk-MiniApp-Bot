@@ -19,4 +19,4 @@ Bearer vk_access_token_settings=friends,status&vk_app_id=111111111&vk_are_notifi
 ```
 ![image](https://user-images.githubusercontent.com/48794610/112273127-0dd15780-8c8e-11eb-967f-590ac9b259ab.png) ![image](https://user-images.githubusercontent.com/48794610/112273244-2ccfe980-8c8e-11eb-8043-40b90a9c41af.png)
 # Last Step
-You are done! Run bot.exe and follow all instructions in it. Success in collecting slaves!
+You are done! Run exe and follow all instructions in it. Success in collecting slaves!
